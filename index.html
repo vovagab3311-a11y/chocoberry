@@ -2,9 +2,17 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ChocoBerry | Premium сладости</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Chocolate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-main: #6a1f2c;   /* Бордовый цвет */
+            --text-dark: #2c1e16;
+            --gold: #c5a059;
+            --gold-light: #e8d3a7;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,371 +20,416 @@
         }
 
         body {
-            background-color: #5E1828; /* благородный бордовый фон */
-            font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
-            line-height: 1.4;
-            color: #997A00; /* тусклое золото */
-            padding: 2rem 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            line-height: 1.6;
         }
 
-        .landing {
-            max-width: 1400px;
-            margin: 0 auto;
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
         }
 
-        /* навигация */
-        .nav {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-bottom: 3rem;
-            border-bottom: 1px solid rgba(153, 122, 0, 0.35);
-            padding-bottom: 1.2rem;
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: none;
-            font-size: 1.3rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: #997A00;
-            cursor: pointer;
-            padding: 0.5rem 1.2rem;
-            transition: all 0.25s ease;
-            font-family: inherit;
+        /* Главный экран (Hero) */
+        .hero {
             position: relative;
+            min-height: 100vh;
+            background-image: url('main-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
         }
 
-        .nav-btn::after {
+        .hero::before {
             content: '';
             position: absolute;
-            bottom: -1.25rem;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #4A0404;
-            transition: width 0.2s;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(20, 14, 10, 0.6);
         }
 
-        .nav-btn.active {
-            color: #f5d381;
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
             font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--gold-light);
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
 
-        .nav-btn.active::after {
-            width: 100%;
-            background-color: #4A0404;
+        .hero p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            line-height: 1.9;
+            letter-spacing: 0.5px;
+            margin-bottom: 40px;
         }
 
-        .nav-btn:hover {
-            color: #e0b354;
+        /* Категории */
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
-        /* сетка карточек */
-        .products-grid {
+        .category-btn {
+            background: transparent;
+            border: 1px solid var(--gold-light);
+            color: var(--gold-light);
+            padding: 15px 35px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 2px;
+        }
+
+        .category-btn.active, .category-btn:hover {
+            background: var(--gold-light);
+            color: var(--text-dark);
+            border-color: var(--gold-light);
+        }
+
+        /* Сетка товаров */
+        .container {
+            max-width: 1300px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 50px 40px;
         }
 
-        /* карточка — тёмно-бордовый бархат */
-        .card {
-            background: #3A1520; /* чуть светлее основного фона, но глубокий оттенок */
-            border-radius: 28px;
-            padding: 1.8rem 1.2rem 1.8rem 1.2rem;
-            text-align: center;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 1px solid rgba(153, 122, 0, 0.5);
-            box-shadow: 0 12px 25px -10px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(0px);
+        .product-card {
+            background: transparent;
             display: flex;
             flex-direction: column;
+            transition: transform 0.4s ease;
+            animation: fadeIn 0.5s ease;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: #997A00;
-            box-shadow: 0 22px 32px -12px rgba(0, 0, 0, 0.5);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .card-title {
-            font-size: 1.7rem;
+        .product-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .img-wrapper {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .product-img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.7s ease;
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.03);
+        }
+
+        .product-info {
+            padding: 25px 0 0 0;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .product-title {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+            color: var(--text-dark);
             font-weight: 600;
-            letter-spacing: -0.3px;
-            margin-bottom: 0.75rem;
-            background: linear-gradient(135deg, #f5d381 0%, #997A00 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
         }
 
-        .card-desc {
+        .product-desc {
             font-size: 0.9rem;
-            color: #c9a86a;
-            margin-bottom: 1rem;
-            line-height: 1.4;
-            padding: 0 0.3rem;
+            color: #f0e6e0;  /* Светлый оттенок для читаемости на бордовом фоне */
+            margin-bottom: 20px;
+            flex-grow: 1;
+            line-height: 1.6;
+            background: rgba(0,0,0,0.2);
+            padding: 8px;
+            border-radius: 6px;
         }
 
-        .card-quantity {
-            font-size: 1rem;
+        .product-meta {
+            margin-bottom: 20px;
+        }
+
+        .product-count {
+            display: block;
+            color: var(--gold);
+            font-size: 0.85rem;
             font-weight: 500;
-            background: rgba(74, 4, 4, 0.5);
-            display: inline-block;
-            padding: 0.3rem 0.9rem;
-            border-radius: 40px;
-            margin: 0.75rem auto;
-            color: #e6c683;
-            letter-spacing: 0.3px;
-            border: 0.5px solid rgba(153, 122, 0, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
         }
 
-        .card-price {
-            font-size: 1.7rem;
-            font-weight: 700;
-            margin: 0.8rem 0 1.2rem;
-            color: #f5d381;
-        }
-
-        .card-price small {
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: #997A00;
+        .product-price {
+            display: block;
+            font-size: 1.6rem;
+            color: var(--text-dark);
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
         }
 
         .order-btn {
-            background: #4A0404; /* кроваво-красный */
-            border: 1px solid rgba(153, 122, 0, 0.6);
-            color: #FCE39A;
-            font-weight: 600;
-            font-size: 1rem;
-            padding: 0.9rem 1rem;
-            border-radius: 60px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: inherit;
-            letter-spacing: 1px;
-            margin-top: auto;
+            background: var(--text-dark);
+            color: var(--gold-light);
+            border: none;
+            padding: 15px;
             width: 100%;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            letter-spacing: 2px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 4px;
         }
 
         .order-btn:hover {
-            background: #630606;
-            color: #FFE6A3;
-            transform: scale(0.98);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            background: var(--gold);
+            color: #fff;
         }
 
-        .premium-badge {
+        /* Модальное окно */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(20, 14, 10, 0.85);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            background: #fff;
+            padding: 50px 40px;
+            border-radius: 8px;
+            max-width: 420px;
+            width: 90%;
             text-align: center;
-            margin-top: 3rem;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            color: #b87a5a;
-            border-top: 1px solid rgba(153, 122, 0, 0.3);
-            padding-top: 2rem;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
         }
 
-        @media (max-width: 700px) {
-            body {
-                padding: 1rem;
-            }
-            .nav {
-                gap: 1rem;
-            }
-            .nav-btn {
-                font-size: 1rem;
-                padding: 0.3rem 0.8rem;
-            }
-            .card-title {
-                font-size: 1.4rem;
-            }
-            .card-price {
-                font-size: 1.4rem;
-            }
+        .modal-overlay.active .modal {
+            transform: translateY(0);
         }
 
-        @media (max-width: 480px) {
-            .products-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            .nav-btn {
-                font-size: 0.9rem;
-            }
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2.5rem;
+            font-family: serif;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+            line-height: 1;
+        }
+
+        .close-modal:hover {
+            color: var(--text-dark);
+        }
+
+        .modal h3 {
+            margin-bottom: 10px;
+            font-size: 2rem;
+            color: var(--text-dark);
+        }
+
+        .modal-subtitle {
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 16px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-tg { background: linear-gradient(135deg, #2AABEE 0%, #229ED9 100%); }
+        .btn-inst { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .btn-phone { background: var(--text-dark); color: var(--gold-light); }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1rem; }
+            .category-btn { padding: 12px 25px; width: 100%; margin-bottom: 10px;}
+            .categories { gap: 0; }
         }
     </style>
 </head>
 <body>
-<div class="landing">
-    <div class="nav">
-        <button class="nav-btn active" data-category="strawberry">Клубника</button>
-        <button class="nav-btn" data-category="candies">Конфеты</button>
-        <button class="nav-btn" data-category="dates">Финики</button>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Premium Chocolate</h1>
+            <p>Изготовление конфет ручной работы из бельгийского шоколада, клубника в шоколаде, ягоды и фрукты в шоколаде. Проведение мастер классов, а также индивидуального обучения по созданию клубники в шоколаде, ягод и фруктов в шоколаде. Возможен выезд в любой город для проведения мастер классов.</p>
+            
+            <div class="categories">
+                <button class="category-btn" data-category="strawberry">Клубника</button>
+                <button class="category-btn" data-category="candy">Конфеты</button>
+                <button class="category-btn" data-category="dates">Финики</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="product-grid" id="productGrid"></div>
     </div>
 
-    <div id="productsGrid" class="products-grid"></div>
-    <div class="premium-badge">CHOCOBERRY · PREMIUM HANDMADE · ДОСТАВКА ПО ВСЕЙ РОССИИ</div>
-</div>
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h3>Связь с мастером</h3>
+            <p class="modal-subtitle">Вы выбрали: <br><strong id="modalItemName" style="color: var(--gold); font-size: 1.2rem; display:block; margin-top:8px;"></strong><br>Напишите мне или позвоните, чтобы оформить заказ и обсудить детали!</p>
+            
+            <a href="https://t.me/Premium_chocolate_13" class="contact-btn btn-tg" target="_blank">Написать в Telegram</a>
+            <a href="https://www.instagram.com/k_moscow_13?utm_source=qr" class="contact-btn btn-inst" target="_blank">Перейти в Instagram</a>
+            <a href="tel:+79001313900" class="contact-btn btn-phone">8 (900) 131-39-00</a>
+        </div>
+    </div>
 
-<script>
-    const productsData = {
-        strawberry: [
-            {
-                name: "Тёмный соблазн",
-                description: "Клубника в 72% бельгийском шоколаде, ручная работа",
-                quantity: "16 штук (расположение 4x4)",
-                price: 1290,
-                fullTitle: "Клубника в тёмном шоколаде"
-            },
-            {
-                name: "Молочная нежность",
-                description: "Молочный шоколад, ягода премиум-класса",
-                quantity: "16 штук (расположение 4x4)",
-                price: 1190,
-                fullTitle: "Клубника в молочном шоколаде"
-            },
-            {
-                name: "Белая мечта",
-                description: "Изысканный белый шоколад с натуральной ванилью",
-                quantity: "16 штук (расположение 4x4)",
-                price: 1390,
-                fullTitle: "Клубника в белом шоколаде"
-            },
-            {
-                name: "Миндальный хруст",
-                description: "Клубника в тёмном шоколаде + карамелизированный миндаль",
-                quantity: "16 штук (расположение 4x4)",
-                price: 1490,
-                fullTitle: "Клубника с миндалём"
-            },
-            {
-                name: "Премиум 24К",
-                description: "Крупная ягода, двойной слой шоколада, съедобное золото",
-                quantity: "16 штук (расположение 4x4)",
-                price: 1690,
-                fullTitle: "Премиум клубника"
-            }
-        ],
-        candies: [
-            {
-                name: "Гранатовый взрыв",
-                description: "Гранат в шоколаде, ручной глазури, кисло-сладкий вкус",
-                quantity: "14 штук",
-                price: 950,
-                fullTitle: "Гранат в шоколаде"
-            },
-            {
-                name: "Мастерская конфет",
-                description: "Ассорти из пралине, трюфелей и карамели",
-                quantity: "9 шт (конфеты ручной работы)",
-                price: 1200,
-                fullTitle: "Конфеты ручной работы"
-            },
-            {
-                name: "Премиум набор",
-                description: "Эксклюзивная подборка: 16 конфет премиум-серии",
-                quantity: "16 штук",
-                price: 2200,
-                fullTitle: "Премиальный набор"
-            }
-        ],
-        dates: [
-            {
-                name: "Королевские финики",
-                description: "Финики Меджуль в шоколаде с фундуком и морской солью",
-                quantity: "8 штук",
-                price: 1100,
-                fullTitle: "Королевские финики"
-            }
-        ]
-    };
+    <script>
+        // Обновленный массив товаров с подробными описаниями (вместо старых коротких)
+        const products = [
+            // Клубника
+            { id: 1, category: 'strawberry', name: 'Набор классический (№1)', desc: 'Набор классический из клубники в шоколаде, украшенный сусальным золотом, в наборе 16 штук, цена - 3999₽', count: '16 штук (4x4)', price: 3999, img: 'клубника 1.jpg' },
+            { id: 2, category: 'strawberry', name: 'Премиальный набор (№2)', desc: 'Премиальный набор клубники в шоколаде, в наборе 24 штуки, украшенный голубикой и красной смородиной в сусальном золоте. Цена 7500₽', count: '24 штуки', price: 7500, img: 'клубника 2.jpg' },
+            { id: 3, category: 'strawberry', name: 'Набор классический (№3)', desc: 'Набор классический из клубники в шоколаде, украшенный сусальным золотом, в наборе 16 штук, цена - 3999₽', count: '16 штук', price: 3999, img: 'клубника 3.jpg' },
+            { id: 4, category: 'strawberry', name: 'Набор с декором (№4)', desc: 'Набор клубники в шоколаде с декором, в наборе 16 штук, цена - 4500₽', count: '16 штук', price: 4500, img: 'клубника 4.jpg' },
+            { id: 5, category: 'strawberry', name: 'Набор классический (№5)', desc: 'Набор классический из клубники в шоколаде, украшенный сусальным золотом, в наборе 16 штук, цена - 3999₽', count: '16 штук', price: 3999, img: 'клубника 5.jpg' },
+            { id: 6, category: 'strawberry', name: 'Бенто торт из клубники', desc: 'Бенто торт из клубники в шоколаде, украшенный сусальным золотом, в наборе 27 штук, цена - 7500₽', count: '27 штук', price: 7500, img: 'торт из клубники.jpg' },
+            // Конфеты
+            { id: 7, category: 'candy', name: 'Гранат в шоколаде (№1)', desc: 'Набор из свежего граната в шоколаде, украшенного сусальным золотом, в наборе 14 штук, цена - 2300₽', count: '14 штук', price: 2300, img: 'конфеты 1.jpg' },
+            { id: 8, category: 'candy', name: 'Конфеты ручной работы (№2)', desc: 'Конфеты ручной работы из бельгийского шоколада Callebaut, начинка: натуральная дробленная фисташка, миндаль, фундук, бельгийская вафля, сублимированная малина, в наборе 9 штук, цена набора - 1550₽', count: '9 штук', price: 1550, img: 'конфеты 2.jpg' },
+            { id: 9, category: 'candy', name: 'Премиальный набор конфет (№3)', desc: 'Премиальный набор конфет ручной работы из бельгийского шоколада Callebaut, начинка: натуральная дробленная фисташка, миндаль, фундук, бельгийская вафля, сублимированная малина, в наборе 16 штук, цена набора - 4550₽', count: '16 штук', price: 4550, img: 'конфеты 3.jpg' },
+            // Финики
+            { id: 10, category: 'dates', name: 'Королевские финики', desc: 'Королевские финики в шоколаде с фундуком и миндалём внутри, в наборе 8 штук, цена 1650₽', count: '8 штук', price: 1650, img: 'королевские финники.jpg' }
+        ];
 
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;');
-    }
+        const grid = document.getElementById('productGrid');
+        const modal = document.getElementById('orderModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalItemName = document.getElementById('modalItemName');
 
-    function renderProducts(categoryKey) {
-        const gridContainer = document.getElementById('productsGrid');
-        if (!gridContainer) return;
-
-        const items = productsData[categoryKey];
-        if (!items || items.length === 0) {
-            gridContainer.innerHTML = `<div style="text-align:center; grid-column:1/-1; padding:3rem; color:#c9a86a;">Товары в разработке</div>`;
-            return;
-        }
-
-        let cardsHtml = '';
-        for (let item of items) {
-            cardsHtml += `
-                <div class="card">
-                    <div class="card-title">${escapeHtml(item.fullTitle)}</div>
-                    <div class="card-desc">${escapeHtml(item.description)}</div>
-                    <div class="card-quantity">
-                        📦 ${escapeHtml(item.quantity)}
+        function renderProducts(category) {
+            grid.innerHTML = '';
+            const filtered = products.filter(p => p.category === category);
+            
+            filtered.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="img-wrapper">
+                        <img src="${product.img}" alt="${product.name}" class="product-img" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20style%3D%22background%3A%23eee%22%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%23c5a059%22%20font-family%3D%22serif%22%20font-size%3D%2216px%22%3E${product.img}%3C%2Ftext%3E%3C%2Fsvg%3E'">
                     </div>
-                    <div class="card-price">
-                        ${item.price.toLocaleString('ru-RU')} <small>₽</small>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-desc">${product.desc}</p>
+                        <div class="product-meta">
+                            <span class="product-count">${product.count}</span>
+                            <span class="product-price">${product.price} ₽</span>
+                        </div>
+                        <button class="order-btn" onclick="openModal('${product.name}')">Заказать</button>
                     </div>
-                    <button class="order-btn" data-product="${escapeHtml(item.fullTitle)}">ЗАКАЗАТЬ</button>
-                </div>
-            `;
+                `;
+                grid.appendChild(card);
+            });
+            
+            document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
         }
 
-        gridContainer.innerHTML = cardsHtml;
-
-        const allOrderBtns = document.querySelectorAll('.order-btn');
-        allOrderBtns.forEach(btn => {
+        document.querySelectorAll('.category-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const productName = btn.getAttribute('data-product') || 'этот товар';
-                alert(`✨ Спасибо! Ваша заявка на "${productName}" принята. Менеджер свяжется с вами. ✨`);
-            });
-        });
-    }
-
-    function initNavigation() {
-        const navBtns = document.querySelectorAll('.nav-btn');
-
-        function setActive(selectedCategory) {
-            navBtns.forEach(btn => {
-                const cat = btn.getAttribute('data-category');
-                if (cat === selectedCategory) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-            renderProducts(selectedCategory);
-        }
-
-        navBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const category = btn.getAttribute('data-category');
-                if (category === 'strawberry') setActive('strawberry');
-                else if (category === 'candies') setActive('candies');
-                else if (category === 'dates') setActive('dates');
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                renderProducts(e.target.dataset.category);
             });
         });
 
-        renderProducts('strawberry');
-    }
+        window.openModal = function(itemName) {
+            modalItemName.textContent = itemName;
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+        }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        initNavigation();
-    });
-</script>
+        function hideModal() {
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        closeModal.onclick = hideModal;
+        window.onclick = (e) => { 
+            if (e.target == modal) hideModal(); 
+        }
+    </script>
 </body>
 </html>
